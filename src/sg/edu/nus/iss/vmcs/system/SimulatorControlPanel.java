@@ -10,6 +10,8 @@ package sg.edu.nus.iss.vmcs.system;
 import java.awt.*;
 import java.awt.event.*;
 
+import sg.edu.nus.iss.vmcs.locale.TranslatorController;
+
 /**
  * This panel is displayed when the system is started up&#46; It enables the user (the Controller) to:
  * <br>
@@ -48,16 +50,17 @@ public class SimulatorControlPanel extends Frame {
     
     private static final int NUM_BUTTONS   = 5;
 
-    private static final String title = "Simulation Control Panel";
+    private static final String title = "Simulation_Control_Panel";
 
-    private static final String L_SIMUL_BEGIN    = "Begin Simulation";
-    private static final String L_SIMUL_END      = "End Simulation";
-    private static final String L_ACT_MAINTAINER = "Activate Maintainer Panel";
-    private static final String L_ACT_MACHINERY  = "Activate Machinery Panel";
-    private static final String L_ACT_CUSTOMER  = "Activate Customer Panel";
+    private static final String L_SIMUL_BEGIN    = "Begin_Simulation";
+    private static final String L_SIMUL_END      = "End_Simulation";
+    private static final String L_ACT_MAINTAINER = "Activate_Maintainer_Panel";
+    private static final String L_ACT_MACHINERY  = "Activate_Machinery_Panel";
+    private static final String L_ACT_CUSTOMER  = "Activate_Customer_Panel";
 
     private MainController          mainCtrl;
     private SimulationController    simulationCtrl;
+    private TranslatorController 	trCtrl;
 
     private Button buttons[] = new Button [NUM_BUTTONS];
 
@@ -69,24 +72,25 @@ public class SimulatorControlPanel extends Frame {
      * @param controller the SimulationController.
      */
     public SimulatorControlPanel (SimulationController controller) {
-        super (title);
+    	super (controller.mCtrl.getTranslatorController().Translate(title));
 
         this.simulationCtrl = controller;
         this.mainCtrl = simulationCtrl.getMainController();
-
+        this.trCtrl = simulationCtrl.getMainController().getTranslatorController();
+        
         setLayout(new GridLayout(0, 1));
 
         add (createPanelLabel());
 
-        addButton(SIMUL_BEGIN, L_SIMUL_BEGIN,
+        addButton(SIMUL_BEGIN, trCtrl.Translate(L_SIMUL_BEGIN),
 		          new BeginSimulationButtonListener(simulationCtrl));
-        addButton(ACT_CUSTOMER,  L_ACT_CUSTOMER,
+        addButton(ACT_CUSTOMER,  trCtrl.Translate(L_ACT_CUSTOMER),
 		          new ActivateCustomerPanelButtonListener(simulationCtrl));
-        addButton(ACT_MAINTAINER, L_ACT_MAINTAINER,
+        addButton(ACT_MAINTAINER, trCtrl.Translate(L_ACT_MAINTAINER),
 		          new ActivateMaintainerPanelButtonListener(simulationCtrl));
-        addButton(ACT_MACHINERY,  L_ACT_MACHINERY,
+        addButton(ACT_MACHINERY,  trCtrl.Translate(L_ACT_MACHINERY),
 		          new ActivateMachineryPanelButtonListener(simulationCtrl));
-        addButton(SIMUL_END,  L_SIMUL_END,
+        addButton(SIMUL_END,  trCtrl.Translate(L_SIMUL_END),
 		          new EndSimulationButtonListener(mainCtrl));
 
         pack();
@@ -116,7 +120,7 @@ public class SimulatorControlPanel extends Frame {
      * @return the panel label.
      */
     private Label createPanelLabel() {
-        Label l = new Label (title);
+        Label l = new Label (trCtrl.Translate(title));
         l.setBackground(Color.blue);
         l.setForeground(Color.white);
         l.setFont(titleFont);

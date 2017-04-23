@@ -12,6 +12,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Panel;
 
+import sg.edu.nus.iss.vmcs.locale.TranslatorController;
 import sg.edu.nus.iss.vmcs.store.CashStore;
 import sg.edu.nus.iss.vmcs.store.CashStoreItem;
 import sg.edu.nus.iss.vmcs.store.Coin;
@@ -39,6 +40,7 @@ public class CoinInputBox extends Panel{
 	public CoinInputBox(TransactionController cctrl){
 		this.txCtrl=cctrl;
 		MainController mainCtrl=cctrl.getMainController();
+		TranslatorController trCtrl = mainCtrl.getTranslatorController();
 		StoreController storeCtrl=mainCtrl.getStoreController();
 		int cashStoreSize=storeCtrl.getStoreSize(Store.CASH);
 		StoreItem[] cashStoreItems=storeCtrl.getStore(Store.CASH).getItems();
@@ -61,7 +63,7 @@ public class CoinInputBox extends Panel{
 				    GridBagConstraints.EAST,GridBagConstraints.HORIZONTAL,
 				    new Insets(0,0,0,0),10,8));
 		}
-		btnCoinButton[cashStoreSize]=new CoinButton("Invalid",-1,CashStore.INVALID_COIN_WEIGHT);
+		btnCoinButton[cashStoreSize]=new CoinButton(trCtrl.Translate("Invalid"),-1,CashStore.INVALID_COIN_WEIGHT);
 		btnCoinButton[cashStoreSize].addActionListener(coinInputListener);
 		add(btnCoinButton[cashStoreSize],new GridBagConstraints(cashStoreSize,1,1,1,1.0,0.0,
 			    GridBagConstraints.EAST,GridBagConstraints.HORIZONTAL,

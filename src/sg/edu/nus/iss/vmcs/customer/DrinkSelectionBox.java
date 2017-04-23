@@ -12,6 +12,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.Panel;
 
+import sg.edu.nus.iss.vmcs.locale.TranslatorController;
 import sg.edu.nus.iss.vmcs.store.DrinksBrand;
 import sg.edu.nus.iss.vmcs.store.DrinksStoreItem;
 import sg.edu.nus.iss.vmcs.store.Store;
@@ -28,6 +29,7 @@ import sg.edu.nus.iss.vmcs.system.MainController;
 public class DrinkSelectionBox extends Panel{
 	private DrinkSelectionItem drinkSelectionItems[];
 	private TransactionController txCtrl;
+	private TranslatorController trCtrl;
 	
 	/**Array of integers providing identifiers for each selection button.*/
 	
@@ -38,6 +40,7 @@ public class DrinkSelectionBox extends Panel{
 	public DrinkSelectionBox(TransactionController txCtrl){
 		this.txCtrl=txCtrl;
 		MainController mainCtrl=txCtrl.getMainController();
+		trCtrl = mainCtrl.getTranslatorController();
 		StoreController storeCtrl=mainCtrl.getStoreController();
 		int drinkStoreSize=storeCtrl.getStoreSize(Store.DRINK);
 		StoreItem[] drinkStoreItems=storeCtrl.getStore(Store.DRINK).getItems();
@@ -53,7 +56,7 @@ public class DrinkSelectionBox extends Panel{
 			String drinksName=drinksBrand.getName();
 			int drinksPrice=drinksBrand.getPrice();
 			int drinksQuantity=drinksStoreItem.getQuantity();
-			drinkSelectionItems[i]=new DrinkSelectionItem(i,drinksName,drinksPrice,drinksQuantity,true,false);
+			drinkSelectionItems[i]=new DrinkSelectionItem(i,drinksName,drinksPrice,drinksQuantity,true,false, trCtrl);
 			drinkSelectionItems[i].addListener(new DrinkSelectionListener(txCtrl,i));
 			add(drinkSelectionItems[i],new GridBagConstraints(0,i,1,1,1.0,0.0,
 				    GridBagConstraints.CENTER,GridBagConstraints.HORIZONTAL,

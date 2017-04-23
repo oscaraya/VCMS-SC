@@ -17,6 +17,7 @@ import java.awt.Label;
 import java.awt.Panel;
 import java.awt.event.ActionListener;
 
+import sg.edu.nus.iss.vmcs.locale.TranslatorController;
 import sg.edu.nus.iss.vmcs.util.WarningDisplay;
 
 /**
@@ -26,9 +27,12 @@ import sg.edu.nus.iss.vmcs.util.WarningDisplay;
  * @version 1.0 2008-10-01
  */
 public class DrinkSelectionItem extends Panel{
+	private final static String WARNING_LABEL = "Not_in_Stock";
+	
 	private Button btn=new Button("");
 	private Label lbl=new Label();
-	private WarningDisplay wnd=new WarningDisplay("Not in Stock");
+	private WarningDisplay wnd;
+	private TranslatorController trCtrl;
 	
 	private int drinkIdentifier=-1;
 	private String name="";
@@ -44,7 +48,10 @@ public class DrinkSelectionItem extends Panel{
 	 * @param quantity the quantity of the drink&#46;
 	 * @param isActive the active status of the drink&#46;
 	 */
-	public DrinkSelectionItem(int drinkIdentifier, String drinkName, int drinkPrice, int quantity, boolean isActive, boolean isWarningOn){
+	public DrinkSelectionItem(int drinkIdentifier, String drinkName, int drinkPrice, int quantity, boolean isActive, boolean isWarningOn, TranslatorController trCtrl){
+		this.trCtrl = trCtrl;
+		wnd=new WarningDisplay(trCtrl.Translate(WARNING_LABEL));
+		
 		this.setDrinkIdentifier(drinkIdentifier);
 		this.setName(drinkName);
 		this.setPrice(drinkPrice);

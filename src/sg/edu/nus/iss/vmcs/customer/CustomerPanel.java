@@ -114,14 +114,14 @@ public class CustomerPanel extends Dialog {
 		
 		txCtrl = ctrl;
 		this.trCtrl = trCtrl;
-	    lblTitle=new Label("VMCS Soft Drinks Dispenser");
-	    lblEnterCoins=new Label("Enter Coins Here");
-		wndInvalidCoin=new WarningDisplay("Invalid Coin");
+	    lblTitle=new Label(trCtrl.Translate("VMCS_Soft_Drinks_Dispenser"));
+	    lblEnterCoins=new Label(trCtrl.Translate("Enter_Coins_Here"));
+		wndInvalidCoin=new WarningDisplay(trCtrl.Translate("Invalid_Coin"));
 	    lbdTotalMoneyInserted=new LabelledValue(trCtrl.Translate("Total_Money_Inserted"),"0 C",50);
-	    wndNoChangeAvailable=new WarningDisplay("No Change Available");
-	    btnTerminate=new Button("Terminate and Return Cash");
-	    lbdCollectCoins=new LabelledValue("Collect Coins:","0 C",50);
-	    lbdCollectCan=new LabelledValue("Collect Can Here:","",100);
+	    wndNoChangeAvailable=new WarningDisplay(trCtrl.Translate("No_Change_Available"));
+	    btnTerminate=new Button(trCtrl.Translate("Terminate_and_Return_Cash"));
+	    lbdCollectCoins=new LabelledValue(trCtrl.Translate("Collect_Coins"),"0 C",50);
+	    lbdCollectCan=new LabelledValue(trCtrl.Translate("Collect_Can_Here"),"",100);
 		
 		
 		addWindowListener(new WindowAdapter() {
