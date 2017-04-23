@@ -29,7 +29,6 @@ import sg.edu.nus.iss.vmcs.system.MainController;
 public class DrinkSelectionBox extends Panel{
 	private DrinkSelectionItem drinkSelectionItems[];
 	private TransactionController txCtrl;
-	private TranslatorController trCtrl;
 	
 	/**Array of integers providing identifiers for each selection button.*/
 	
@@ -40,7 +39,7 @@ public class DrinkSelectionBox extends Panel{
 	public DrinkSelectionBox(TransactionController txCtrl){
 		this.txCtrl=txCtrl;
 		MainController mainCtrl=txCtrl.getMainController();
-		trCtrl = mainCtrl.getTranslatorController();
+		TranslatorController trCtrl = mainCtrl.getTranslatorController();
 		StoreController storeCtrl=mainCtrl.getStoreController();
 		int drinkStoreSize=storeCtrl.getStoreSize(Store.DRINK);
 		StoreItem[] drinkStoreItems=storeCtrl.getStore(Store.DRINK).getItems();

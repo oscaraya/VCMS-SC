@@ -32,7 +32,6 @@ public class DrinkSelectionItem extends Panel{
 	private Button btn=new Button("");
 	private Label lbl=new Label();
 	private WarningDisplay wnd;
-	private TranslatorController trCtrl;
 	
 	private int drinkIdentifier=-1;
 	private String name="";
@@ -49,7 +48,6 @@ public class DrinkSelectionItem extends Panel{
 	 * @param isActive the active status of the drink&#46;
 	 */
 	public DrinkSelectionItem(int drinkIdentifier, String drinkName, int drinkPrice, int quantity, boolean isActive, boolean isWarningOn, TranslatorController trCtrl){
-		this.trCtrl = trCtrl;
 		wnd=new WarningDisplay(trCtrl.Translate(WARNING_LABEL));
 		
 		this.setDrinkIdentifier(drinkIdentifier);

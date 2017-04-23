@@ -28,6 +28,7 @@ public class Environment {
 	
 	/**This constant attribute denotes the language string*/
 	public final static String LANGUAGE = "language";
+	public final static String DEFAULT_LANGUAGE = "English";
 	
 
 	private static Properties prop;
@@ -78,7 +79,7 @@ public class Environment {
 	}
 	
 	public static String getLanguage(){
-		return prop.getProperty(LANGUAGE);
+		return prop.getProperty(LANGUAGE, DEFAULT_LANGUAGE);
 	}
 	
 }//End of class Environment
