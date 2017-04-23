@@ -7,6 +7,8 @@
  */
 package sg.edu.nus.iss.vmcs;
 
+import java.util.Locale;
+
 import sg.edu.nus.iss.vmcs.system.*;
 import sg.edu.nus.iss.vmcs.util.*;
 

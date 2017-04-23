@@ -69,7 +69,7 @@ public class TransactionController {
 	 */
 	public void displayCustomerPanel() {
 		SimulatorControlPanel scp = mainCtrl.getSimulatorControlPanel();
-	    custPanel = new CustomerPanel((Frame) scp, this);
+	    custPanel = new CustomerPanel((Frame) scp, this, mainCtrl.getTranslatorController());
 		custPanel.display();
 		dispenseCtrl.updateDrinkPanel();
 		dispenseCtrl.allowSelection(true);

@@ -30,7 +30,9 @@ import java.awt.Panel;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ResourceBundle;
 
+import sg.edu.nus.iss.vmcs.locale.TranslatorController;
 import sg.edu.nus.iss.vmcs.system.SimulatorControlPanel;
 import sg.edu.nus.iss.vmcs.util.LabelledValue;
 import sg.edu.nus.iss.vmcs.util.WarningDisplay;
@@ -84,18 +86,19 @@ public class CustomerPanel extends Dialog {
 	
 	private static final String TITLE = "Customer Panel";
 	private TransactionController txCtrl;
+	private TranslatorController trCtrl;
 
 	private Panel pan0=new Panel();
-    private Label lblTitle=new Label("VMCS Soft Drinks Dispenser");
-    private Label lblEnterCoins=new Label("Enter Coins Here");
+    private Label lblTitle;
+    private Label lblEnterCoins;
     private CoinInputBox coinInputBox;
     private DrinkSelectionBox drinkSelectionBox;
-    private WarningDisplay wndInvalidCoin=new WarningDisplay("Invalid Coin");
-    private LabelledValue lbdTotalMoneyInserted=new LabelledValue("Total Money Inserted:","0 C",50);
-    private WarningDisplay wndNoChangeAvailable=new WarningDisplay("No Change Available");
-    private Button btnTerminate=new Button("Terminate and Return Cash");
-    private LabelledValue lbdCollectCoins=new LabelledValue("Collect Coins:","0 C",50);
-    private LabelledValue lbdCollectCan=new LabelledValue("Collect Can Here:","",100);
+    private WarningDisplay wndInvalidCoin;
+    private LabelledValue lbdTotalMoneyInserted;
+    private WarningDisplay wndNoChangeAvailable;
+    private Button btnTerminate;
+    private LabelledValue lbdCollectCoins;
+    private LabelledValue lbdCollectCan;
     
     /**
      * This constructor creates an instance of the Customer Panel&#46; It further
@@ -106,10 +109,20 @@ public class CustomerPanel extends Dialog {
      * @param fr the parent frame
      * @param ctrl the Transaction Controller
      */
-	public CustomerPanel(Frame fr, TransactionController ctrl) {
+	public CustomerPanel(Frame fr, TransactionController ctrl, TranslatorController trCtrl) {
 		super(fr, TITLE, false);
 		
 		txCtrl = ctrl;
+		this.trCtrl = trCtrl;
+	    lblTitle=new Label("VMCS Soft Drinks Dispenser");
+	    lblEnterCoins=new Label("Enter Coins Here");
+		wndInvalidCoin=new WarningDisplay("Invalid Coin");
+	    lbdTotalMoneyInserted=new LabelledValue(trCtrl.Translate("Total_Money_Inserted"),"0 C",50);
+	    wndNoChangeAvailable=new WarningDisplay("No Change Available");
+	    btnTerminate=new Button("Terminate and Return Cash");
+	    lbdCollectCoins=new LabelledValue("Collect Coins:","0 C",50);
+	    lbdCollectCan=new LabelledValue("Collect Can Here:","",100);
+		
 		
 		addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent ev) {

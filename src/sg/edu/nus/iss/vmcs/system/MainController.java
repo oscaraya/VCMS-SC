@@ -10,6 +10,7 @@ package sg.edu.nus.iss.vmcs.system;
 import java.io.IOException;
 
 import sg.edu.nus.iss.vmcs.customer.TransactionController;
+import sg.edu.nus.iss.vmcs.locale.TranslatorController;
 import sg.edu.nus.iss.vmcs.machinery.MachineryController;
 import sg.edu.nus.iss.vmcs.maintenance.MaintenanceController;
 import sg.edu.nus.iss.vmcs.store.StoreController;
@@ -27,6 +28,7 @@ public class MainController {
 	private MaintenanceController maintenanceCtrl;
 	private TransactionController txCtrl;
 	private StoreController       storeCtrl;
+	private TranslatorController  trCtrl;
 
 	private String      propertyFile;
 
@@ -67,6 +69,7 @@ public class MainController {
 				new DrinkPropertyLoader(Environment.getDrinkPropFile());
 			cashLoader.initialize();
 			drinksLoader.initialize();
+			trCtrl = new TranslatorController(Environment.getLanguage());
 			storeCtrl = new StoreController(cashLoader, drinksLoader);
 			storeCtrl.initialize();
 			simulatorCtrl = new SimulationController(this);
@@ -127,6 +130,14 @@ public class MainController {
 	 */
 	public TransactionController getTransactionController() {
 		return txCtrl;
+	}
+	
+	/**
+	 * This method returns the TranslatorController.
+	 * @return the TranslatorController.
+	 */
+	public TranslatorController getTranslatorController() {
+		return trCtrl;
 	}
 
 	/**
