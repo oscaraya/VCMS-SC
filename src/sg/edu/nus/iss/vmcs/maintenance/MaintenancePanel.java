@@ -19,6 +19,7 @@ import java.awt.Label;
 import java.awt.Panel;
 import java.awt.Toolkit;
 
+import sg.edu.nus.iss.vmcs.locale.TranslatorController;
 import sg.edu.nus.iss.vmcs.store.Store;
 import sg.edu.nus.iss.vmcs.util.LabelledDisplay;
 import sg.edu.nus.iss.vmcs.util.VMCSException;
@@ -61,7 +62,7 @@ public class MaintenancePanel extends Dialog {
 	/**This constant attribute denote the dialog status of the MaintenancePanel*/
 	public final static int DIALOG  = 3;
 
-	private static final String TITLE = "Maintenance Panel";
+	private static final String TITLE = "Maintenance_Panel";
 	private LabelledDisplay password;
 	private LabelledDisplay collectCash;
 	private Button exitBtn;
@@ -79,12 +80,13 @@ public class MaintenancePanel extends Dialog {
 	 * @param mc the MaintenanceController.
 	 */
 	public MaintenancePanel(Frame fr, MaintenanceController mc) {
-		super(fr, TITLE, false);
+		super(fr, mc.getMainController().getTranslatorController().Translate(TITLE), false);
 
 		mctrl = mc;
+		TranslatorController trCtrl = mc.getMainController().getTranslatorController();
 
 		// north part
-		Label lb = new Label(TITLE);
+		Label lb = new Label(trCtrl.Translate(TITLE));
 		lb.setFont(new Font("Helvetica", Font.BOLD, 24));
 		Panel tp1 = new Panel();
 		tp1.add(lb);
@@ -92,13 +94,13 @@ public class MaintenancePanel extends Dialog {
 		Panel tpn = new Panel();
 		tpn.setLayout(new GridLayout(0, 1));
 
-		password = new LabelledDisplay("Password:", 30, LabelledDisplay.FLOW);
+		password = new LabelledDisplay(trCtrl.Translate("Password"), 30, LabelledDisplay.FLOW);
 		PasswordListener pl = new PasswordListener(mc.getAccessManager());
 		password.addListener(pl);
 
 		Panel tp3 = new Panel();
-		validPswd = new WarningDisplay("Valid Password");
-		invalidPswd = new WarningDisplay("Invalid Password");
+		validPswd = new WarningDisplay(trCtrl.Translate("Valid_Password"));
+		invalidPswd = new WarningDisplay(trCtrl.Translate("Invalid_Password"));
 		tp3.add(validPswd);
 		tp3.add(invalidPswd);
 		tpn.add(tp1);
@@ -115,13 +117,13 @@ public class MaintenancePanel extends Dialog {
 		Panel tp5 = new Panel();
 		tp5.setLayout(new GridLayout(0, 1));
 
-		totalCash = new ButtonItem("Show Total Cash Held", 5, ButtonItem.FLOW);
+		totalCash = new ButtonItem(trCtrl.Translate("Show_Total_Cash_Held"), 5, ButtonItem.FLOW);
 		TotalCashButtonListener tl;
 
 		tl = new TotalCashButtonListener(mctrl);
 		totalCash.addListener(tl);
 
-		transferCash = new Button("Press to Collect All Cash");
+		transferCash = new Button(trCtrl.Translate("Press_to_Collect_All_Cash"));
 		transferCash.addActionListener(new TransferCashButtonListener(mctrl));
 
 		Panel tp6 = new Panel();
@@ -129,8 +131,8 @@ public class MaintenancePanel extends Dialog {
 		tp6.add(transferCash);
 
 		collectCash =
-			new LabelledDisplay("Collect Cash:", 5, LabelledDisplay.FLOW);
-		exitBtn = new Button("Press Here when Finished");
+			new LabelledDisplay(trCtrl.Translate("Collect_Cash"), 5, LabelledDisplay.FLOW);
+		exitBtn = new Button(trCtrl.Translate("Press_Here_when_Finished"));
 		exitBtn.addActionListener(new ExitButtonListener(mctrl));
 
 		tp5.add(totalCash);

@@ -9,6 +9,7 @@ package sg.edu.nus.iss.vmcs.maintenance;
 
 import java.awt.*;
 
+import sg.edu.nus.iss.vmcs.locale.TranslatorController;
 import sg.edu.nus.iss.vmcs.store.*;
 import sg.edu.nus.iss.vmcs.util.*;
 
@@ -22,7 +23,7 @@ import sg.edu.nus.iss.vmcs.util.*;
  * @author Olivo Miotto, Pang Ping Li
  */
 public class DrinkDisplay extends Panel {
-	public final static String TITLE = "Quantity of Drinks Available";
+	public final static String TITLE = "Quantity_of_Drinks_Available";
 
 	private StoreController storeCtrl;
 	private MaintenanceController mCtrl;
@@ -37,13 +38,14 @@ public class DrinkDisplay extends Panel {
 	public DrinkDisplay(MaintenanceController mctrl) {
 		mCtrl = mctrl;
 		storeCtrl = mCtrl.getMainController().getStoreController();
+		TranslatorController trCtrl = mctrl.getMainController().getTranslatorController();
 
 		this.setLayout(new BorderLayout());
 		int len;
 		len = storeCtrl.getStoreSize(Store.DRINK);
 		StoreItem[] items = storeCtrl.getStoreItems(Store.DRINK);
 
-		bi = new ButtonItemDisplay(TITLE, items, len);
+		bi = new ButtonItemDisplay(trCtrl.Translate(TITLE), items, len);
 
 		bi.addListener(new DrinkDisplayListener(mCtrl));
 		bi.clear();

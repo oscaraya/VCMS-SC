@@ -9,6 +9,7 @@ package sg.edu.nus.iss.vmcs.maintenance;
 
 import java.awt.*;
 
+import sg.edu.nus.iss.vmcs.locale.TranslatorController;
 import sg.edu.nus.iss.vmcs.store.*;
 import sg.edu.nus.iss.vmcs.util.VMCSException;
 
@@ -22,7 +23,7 @@ import sg.edu.nus.iss.vmcs.util.VMCSException;
  * @author Olivo Miotto, Pang Ping Li
  */
 public class CoinDisplay extends Panel {
-	public final static String TITLE = "Quantity of Coins Available";
+	public final static String TITLE = "Quantity_of_Coins_Available";
 
 	private StoreController storeCtrl;
 	private MaintenanceController mCtrl;
@@ -37,11 +38,12 @@ public class CoinDisplay extends Panel {
 	public CoinDisplay(MaintenanceController mctrl) {
 		mCtrl = mctrl;
 		storeCtrl = mCtrl.getMainController().getStoreController();
+		TranslatorController trCtrl = mctrl.getMainController().getTranslatorController();
 
 		len = storeCtrl.getStoreSize(Store.CASH);
 		StoreItem[] items = storeCtrl.getStoreItems(Store.CASH);
 
-		bi = new ButtonItemDisplay(TITLE, items, len);
+		bi = new ButtonItemDisplay(trCtrl.Translate(TITLE), items, len);
 
 		bi.addListener(new CoinDisplayListener(mCtrl));
 

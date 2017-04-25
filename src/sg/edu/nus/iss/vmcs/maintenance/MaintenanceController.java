@@ -224,7 +224,7 @@ public class MaintenanceController {
 			MessageDialog msg =
 				new MessageDialog(
 					mpanel,
-					"Please Lock the Door before You Leave");
+					machctrl.getMainController().getTranslatorController().Translate("Please_Lock_the_Door_before_You_Leave"));
 			msg.setLocation(500, 500);
 			return;
 		}
