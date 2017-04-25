@@ -29,7 +29,7 @@ import sg.edu.nus.iss.vmcs.system.SimulatorControlPanel;
  * @author Olivo Miotto, Pang Ping Li
  */
 public class MachinerySimulatorPanel extends Dialog {
-	private static final String TITLE = "Machinery Panel";
+	private static final String TITLE = "Machinery_Panel";
 
 	private StoreViewer cashDisplay;
 	private StoreViewer drinksDisplay;
@@ -43,17 +43,17 @@ public class MachinerySimulatorPanel extends Dialog {
 	 * @param machCtrl the MachineryController.
 	 */
 	public MachinerySimulatorPanel(Frame fr, MachineryController machCtrl) {
-		super(fr, TITLE, false);
+		super(fr, machCtrl.getMainController().getTranslatorController().Translate(TITLE), false);
 
 		machineryCtrl = machCtrl;
 		storeCtrl = machineryCtrl.getMainController().getStoreController();
 
-		Label lb = new Label(TITLE);
+		Label lb = new Label(machCtrl.getMainController().getTranslatorController().Translate(TITLE));
 		lb.setFont(new Font("Helvetica", Font.BOLD, 24));
 		lb.setAlignment(Label.CENTER);
 
-		cashDisplay = new StoreViewer(Store.CASH, storeCtrl);
-		drinksDisplay = new StoreViewer(Store.DRINK, storeCtrl);
+		cashDisplay = new StoreViewer(Store.CASH, storeCtrl, machCtrl.getMainController().getTranslatorController());
+		drinksDisplay = new StoreViewer(Store.DRINK, storeCtrl, machCtrl.getMainController().getTranslatorController());
 
 		Panel tp = new Panel();
 		tp.setLayout(new GridLayout(0, 1));
@@ -63,7 +63,7 @@ public class MachinerySimulatorPanel extends Dialog {
 		Panel dp = new Panel();
 		doorDisplay = new Checkbox();
 		doorDisplay.addItemListener(new DoorListener(machineryCtrl));
-		doorDisplay.setLabel("Door Locked");
+		doorDisplay.setLabel(machCtrl.getMainController().getTranslatorController().Translate("Door_Locked"));
 		dp.add(doorDisplay);
 
 		this.setLayout(new BorderLayout());

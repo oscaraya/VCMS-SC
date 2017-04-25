@@ -9,6 +9,7 @@ package sg.edu.nus.iss.vmcs.machinery;
 
 import java.awt.*;
 
+import sg.edu.nus.iss.vmcs.locale.TranslatorController;
 import sg.edu.nus.iss.vmcs.store.*;
 import sg.edu.nus.iss.vmcs.util.*;
 
@@ -26,16 +27,16 @@ public class StoreViewer extends Panel {
 	private int type;
 	
 	/**This constant attribute holds the cash view title*/
-	public static final String CASH_VIEW_TITLE = "Quantity of Coins Available";
+	public static final String CASH_VIEW_TITLE = "Quantity_of_Coins_Available";
 	/**This constant attribute holds the drink view title*/
-	public static final String DRINK_VIEW_TITLE = "Quantity of Drinks Available";
+	public static final String DRINK_VIEW_TITLE = "Quantity_of_Drinks_Available";
 
 	/**
 	 * This constructor creates an instance of StoreViewer object.
 	 * @param ti the type of the store.
 	 * @param sctrl the StoreController.
 	 */
-	public StoreViewer(int ti, StoreController sctrl) {
+	public StoreViewer(int ti, StoreController sctrl, TranslatorController trCtrl) {
 		
 		storeCtrl = sctrl;
 		type = ti;
@@ -43,10 +44,10 @@ public class StoreViewer extends Panel {
 		String title = null;
 		switch (type) {
 		case Store.CASH:
-			title = CASH_VIEW_TITLE;
+			title = trCtrl.Translate(CASH_VIEW_TITLE);
 			break;
 		case Store.DRINK:
-			title = DRINK_VIEW_TITLE;
+			title = trCtrl.Translate(DRINK_VIEW_TITLE);
 			break;
 		}
 
