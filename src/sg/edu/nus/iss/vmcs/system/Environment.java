@@ -36,6 +36,8 @@ public class Environment {
 	public final static String AUDIT_LOG_TRANSFER_ALL_CASH_ENABLED = "audit.log.transfer_all_cash.enabled";
 	public static final String DEFAULT_ENABLE_VALUE = "false";
 
+	/**This constant is for Give Change */
+	public final static String CHANGETYPE = "change.type";
 
 	private static Properties prop;
 
@@ -100,7 +102,9 @@ public class Environment {
 		return Boolean.valueOf(prop.getProperty(AUDIT_LOG_TRANSFER_ALL_CASH_ENABLED, DEFAULT_ENABLE_VALUE));
 	}
 
-
+	public static String getChangetype() {
+		return prop.getProperty(CHANGETYPE);
+	}
 
 
 }//End of class Environment

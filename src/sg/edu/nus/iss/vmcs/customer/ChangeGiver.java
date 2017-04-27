@@ -12,6 +12,7 @@ import sg.edu.nus.iss.vmcs.store.Coin;
 import sg.edu.nus.iss.vmcs.store.Store;
 import sg.edu.nus.iss.vmcs.store.StoreController;
 import sg.edu.nus.iss.vmcs.store.StoreItem;
+import sg.edu.nus.iss.vmcs.system.Environment;
 import sg.edu.nus.iss.vmcs.system.MainController;
 import sg.edu.nus.iss.vmcs.util.VMCSException;
 
@@ -22,6 +23,7 @@ import sg.edu.nus.iss.vmcs.util.VMCSException;
  */
 public class ChangeGiver {
 	private TransactionController txCtrl; 
+	private ChangeGivingStrategy changeGivingStrategy;
 
 	/**
 	 * The constructor creates an instance of the object.
@@ -29,6 +31,15 @@ public class ChangeGiver {
 	 */
 	public ChangeGiver(TransactionController txCtrl){
 		this.txCtrl=txCtrl;
+		//this.changeGivingStrategy = changeGivingStrategy;
+		}
+
+		public void executeStrategy(int num1){
+			changeGivingStrategy.computeChange(num1);
+		}
+
+	public ChangeGiver(ChangeGivingStrategy changeGivingStrategy){
+		this.changeGivingStrategy = changeGivingStrategy;
 	}
 	
 	/**
@@ -50,33 +61,18 @@ public class ChangeGiver {
 	public boolean giveChange(int changeRequired){
 		if(changeRequired==0)
 			return true;
-		try{
 			int changeBal=changeRequired;
-			MainController mainCtrl=txCtrl.getMainController();
-			StoreController storeCtrl=mainCtrl.getStoreController();
-			int cashStoreSize=storeCtrl.getStoreSize(Store.CASH); 
-			for(int i=cashStoreSize-1;i>=0;i--){
-				StoreItem cashStoreItem=storeCtrl.getStore(Store.CASH).getStoreItem(i);
-				int quantity=cashStoreItem.getQuantity();
-				Coin coin=(Coin)cashStoreItem.getContent();
-				int value=coin.getValue();
-				int quantityRequired=0;
-				while(changeBal>0&&changeBal>=value&&quantity>0){
-					changeBal-=value;
-					quantityRequired++;
-					quantity--;
-				}
-				txCtrl.getMainController().getMachineryController().giveChange(i,quantityRequired);
+			boolean check=false;
+			System.out.println("print"+Environment.getChangetype());
+			if(Environment.getChangetype().equals("large_denomination_first")) {
+				ChangeGiver context = new ChangeGiver(new LargerDenominationFirst(txCtrl));
+				context.executeStrategy(changeRequired);
+				return true;
+			}else{
+				ChangeGiver context = new ChangeGiver(new BalancedNoOfDenomition(txCtrl));
+				context.executeStrategy(changeRequired);
+				return true;
 			}
-			txCtrl.getCustomerPanel().setChange(changeRequired-changeBal);
-			if(changeBal>0)
-				txCtrl.getCustomerPanel().displayChangeStatus(true);
-		}
-		catch(VMCSException ex){
-			txCtrl.terminateFault();
-			return false;
-		}
-		return true;
 	}
 	
 	/**
