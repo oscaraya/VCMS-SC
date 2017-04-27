@@ -7,10 +7,12 @@
  */
 package sg.edu.nus.iss.vmcs.store;
 
+import sg.edu.nus.iss.vmcs.util.audit.LoggerController;
+
 import java.io.IOException;
 
 /**
- * This control object manages changes in CashStore attributes and 
+ * This control object manages changes in CashStore attributes and
  * the DrinksStore attributes.
  *
  * @see CashStore
@@ -22,7 +24,7 @@ import java.io.IOException;
  * @see Store
  * @see StoreItem
  * @see StoreObject
- * 
+ *
  * @version 3.0 5/07/2003
  * @author Olivo Miotto, Pang Ping Li
  */
@@ -32,17 +34,23 @@ public class StoreController {
 
 	private PropertyLoader cashLoader;
 	private PropertyLoader drinksLoader;
+	private LoggerController itemDispenseLogger;
+	private LoggerController paymentlogger;
 
 	/**
 	 * This constructor creates an instance of StoreController object.
 	 * @param cashLoader the cash loader.
 	 * @param drinksLoader the drinks loader.
+	 * @param itemDispenseLogger
+	 * @param paymentLogger
 	 */
 	public StoreController(
-		PropertyLoader cashLoader,
-		PropertyLoader drinksLoader) {
+			PropertyLoader cashLoader,
+			PropertyLoader drinksLoader, LoggerController itemDispenseLogger, LoggerController paymentLogger) {
 		this.cashLoader = cashLoader;
 		this.drinksLoader = drinksLoader;
+		this.itemDispenseLogger = itemDispenseLogger;
+		this.paymentlogger = paymentLogger;
 	}
 
 	/**
@@ -112,6 +120,7 @@ public class StoreController {
 		CashStoreItem item;
 		item = (CashStoreItem) this.getStoreItem(Store.CASH, idx);
 		item.increment();
+		this.paymentlogger.info("Coin Received: "+ c.getName()+", value: "+c.getValue());
 	}
 
 	/**
@@ -271,7 +280,7 @@ public class StoreController {
 	}
 
 	/**
-	 * This method instructs the {@link DrinksStore} to dispense one drink, and then updates the 
+	 * This method instructs the {@link DrinksStore} to dispense one drink, and then updates the
 	 * {@link sg.edu.nus.iss.vmcs.machinery.MachinerySimulatorPanel}&#46; It returns TRUE or FALSE to indicate whether dispensing
 	 * was successful&#46;
 	 * @param idx the index of the drinks to be dispensed&#46;
@@ -280,6 +289,7 @@ public class StoreController {
 		DrinksStoreItem item;
 		item = (DrinksStoreItem) getStoreItem(Store.DRINK, idx);
 		item.decrement();
+		this.itemDispenseLogger.info("Dispense Drink: "+item.getContent().getName());
 	}
 
 	/**
@@ -299,7 +309,7 @@ public class StoreController {
 	 * denomination, and then updates the {@link sg.edu.nus.iss.vmcs.machinery.MachinerySimulatorPanel}&#46; It return TRUE
 	 * or FALSE to indicate whether the change issue was successful&#46;
 	 * @param idx the index of the Coin&#46;
-	 * @param numOfCoins the number of Coin to deduct&#46; 
+	 * @param numOfCoins the number of Coin to deduct&#46;
 	 */
 	public void giveChange(int idx, int numOfCoins)  {
 		CashStoreItem item;

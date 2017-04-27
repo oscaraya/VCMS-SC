@@ -10,6 +10,8 @@ import sg.edu.nus.iss.vmcs.system.CashPropertyLoader;
 import sg.edu.nus.iss.vmcs.system.DrinkPropertyLoader;
 import sg.edu.nus.iss.vmcs.system.Environment;
 import sg.edu.nus.iss.vmcs.system.MainController;
+import sg.edu.nus.iss.vmcs.util.audit.ItemDispenseLoggerController;
+import sg.edu.nus.iss.vmcs.util.audit.PaymentLoggerController;
 
 public class StoreControllerTest extends TestCase{
 	private String propertyFilename=System.getProperty("propertyFilename");
@@ -33,7 +35,7 @@ public class StoreControllerTest extends TestCase{
 		cashLoader.initialize();
 		drinksLoader.initialize();
 		//Act
-		StoreController storeController=new StoreController(cashLoader, drinksLoader);
+		StoreController storeController=new StoreController(cashLoader, drinksLoader, new ItemDispenseLoggerController(), new PaymentLoggerController());
 		storeController.initialize();
 		//Assert
 		assertNotNull(storeController);

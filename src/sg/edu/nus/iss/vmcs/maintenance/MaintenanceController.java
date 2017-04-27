@@ -20,6 +20,8 @@ import sg.edu.nus.iss.vmcs.system.MainController;
 import sg.edu.nus.iss.vmcs.system.SimulatorControlPanel;
 import sg.edu.nus.iss.vmcs.util.MessageDialog;
 import sg.edu.nus.iss.vmcs.util.VMCSException;
+import sg.edu.nus.iss.vmcs.util.audit.LoggerController;
+import sg.edu.nus.iss.vmcs.util.audit.TransferAllCashLoggerController;
 
 /**
  * This control object handles the system maintenance use case.
@@ -31,13 +33,15 @@ public class MaintenanceController {
 	private MainController mCtrl;
 	private MaintenancePanel mpanel;
 	private AccessManager am;
+	private LoggerController auditLogger;
 
 	/**
 	 * This constructor creates an instance of the MaintenanceController.
 	 * @param mctrl the MainController.
 	 */
-	public MaintenanceController(MainController mctrl) {
+	public MaintenanceController(MainController mctrl, LoggerController auditLogger) {
 		mCtrl = mctrl;
+		this.auditLogger = auditLogger;
 		am = new AccessManager(this);
 	}
 
@@ -78,7 +82,7 @@ public class MaintenanceController {
 	 * CoinDisplay, DrinkDisplay, TotalCashDisplay, ExitButton, Transfer Cash Button and
 	 * Total Cash Button&#46;
 	 * <br>
-	 * 2- The Door will be instructed to set its status as unlocked, and then inform the 
+	 * 2- The Door will be instructed to set its status as unlocked, and then inform the
 	 * MachinerySimulatorPanel to update the Door Status Display&#46;
 	 * <br>
 	 * 3- The SimulatorControlPanel will be instructed to deactivate the
@@ -180,6 +184,7 @@ public class MaintenanceController {
 			// the cash qty current is displayed in the Maintenance panel needs to be update to be 0;
 			// not required.
 			mpanel.updateCurrentQtyDisplay(Store.CASH, 0);
+			this.auditLogger.info("Maintenance - transfer all cache completed: "+ cc);
 		} catch (VMCSException e) {
 			System.out.println("MaintenanceController.transferAll:" + e);
 		}
@@ -230,7 +235,7 @@ public class MaintenanceController {
 		}
 
 		mpanel.setActive(MaintenancePanel.DIALOG, true);
-		
+
 		//Refresh Customer Panel
 		CustomerPanel custPanel=mCtrl.getTransactionController().getCustomerPanel();
 		if(custPanel==null){
@@ -249,4 +254,6 @@ public class MaintenanceController {
 		if (mpanel != null)
 			mpanel.closeDown();
 	}
+
+
 }//End of class MaintenanceController

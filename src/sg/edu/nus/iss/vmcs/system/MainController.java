@@ -8,6 +8,8 @@
 package sg.edu.nus.iss.vmcs.system;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import sg.edu.nus.iss.vmcs.customer.TransactionController;
 import sg.edu.nus.iss.vmcs.locale.TranslatorController;
@@ -15,6 +17,10 @@ import sg.edu.nus.iss.vmcs.machinery.MachineryController;
 import sg.edu.nus.iss.vmcs.maintenance.MaintenanceController;
 import sg.edu.nus.iss.vmcs.store.StoreController;
 import sg.edu.nus.iss.vmcs.util.VMCSException;
+import sg.edu.nus.iss.vmcs.util.audit.BaseLoggerController;
+import sg.edu.nus.iss.vmcs.util.audit.ItemDispenseLoggerController;
+import sg.edu.nus.iss.vmcs.util.audit.PaymentLoggerController;
+import sg.edu.nus.iss.vmcs.util.audit.TransferAllCashLoggerController;
 
 /**
  * This object is the main controller of the vending machine&#46; It coordinates the main operations of the VMCS&#46;
@@ -70,19 +76,25 @@ public class MainController {
 			cashLoader.initialize();
 			drinksLoader.initialize();
 			trCtrl = new TranslatorController(Environment.getLanguage());
-			storeCtrl = new StoreController(cashLoader, drinksLoader);
+			storeCtrl = new StoreController(cashLoader, drinksLoader, new ItemDispenseLoggerController(), new PaymentLoggerController());
 			storeCtrl.initialize();
 			simulatorCtrl = new SimulationController(this);
 			machineryCtrl = new MachineryController(this);
 			machineryCtrl.initialize();
-			maintenanceCtrl = new MaintenanceController(this);
+			maintenanceCtrl = new MaintenanceController(this, new TransferAllCashLoggerController());
 			txCtrl=new TransactionController(this);
+
+
+
+
 		} catch (IOException e) {
 			throw new VMCSException(
 				"MainController.initialize",
 				e.getMessage());
 		}
 	}
+
+
 
 	/**
 	 * This method returns the SimulationController.
@@ -109,7 +121,7 @@ public class MainController {
 	}
 
 	/**
-	 * This method returns the MachineryController&#46; 
+	 * This method returns the MachineryController&#46;
 	 * @return the MachineryController&#46;
 	 */
 	public MachineryController getMachineryController() {
@@ -123,7 +135,7 @@ public class MainController {
 	public MaintenanceController getMaintenanceController() {
 		return maintenanceCtrl;
 	}
-	
+
 	/**
 	 * This method returns the TransactionController.
 	 * @return the TransactionController.
@@ -131,7 +143,7 @@ public class MainController {
 	public TransactionController getTransactionController() {
 		return txCtrl;
 	}
-	
+
 	/**
 	 * This method returns the TranslatorController.
 	 * @return the TranslatorController.

@@ -25,11 +25,17 @@ public class Environment {
 	public final static String CASH_PROP_FILE = "cashFile";
 	/**This constant attribute denotes the password string*/
 	public final static String PASSWORD = "password";
-	
+
 	/**This constant attribute denotes the language string*/
 	public final static String LANGUAGE = "language";
 	public final static String DEFAULT_LANGUAGE = "English";
-	
+
+	/**This constant is for audit logger */
+	public final static String AUDIT_LOG_ITEM_DISPENSE_ENABLED = "audit.log.item_dispense.enabled";
+	public final static String AUDIT_LOG_PAYMENT_ENABLED = "audit.log.payment.enabled";
+	public final static String AUDIT_LOG_TRANSFER_ALL_CASH_ENABLED = "audit.log.transfer_all_cash.enabled";
+	public static final String DEFAULT_ENABLE_VALUE = "false";
+
 
 	private static Properties prop;
 
@@ -77,9 +83,24 @@ public class Environment {
 	public static String getPassword() {
 		return prop.getProperty(PASSWORD);
 	}
-	
+
 	public static String getLanguage(){
 		return prop.getProperty(LANGUAGE, DEFAULT_LANGUAGE);
 	}
-	
+
+	public static Boolean isAuditLogItemDispenseEnabled() {
+		return Boolean.valueOf(prop.getProperty(AUDIT_LOG_ITEM_DISPENSE_ENABLED, DEFAULT_ENABLE_VALUE));
+	}
+
+	public static Boolean isAuditLogPaymentEnabled() {
+		return Boolean.valueOf(prop.getProperty(AUDIT_LOG_PAYMENT_ENABLED, DEFAULT_ENABLE_VALUE));
+	}
+
+	public static Boolean isAuditLogTransferAllCashEnabled() {
+		return Boolean.valueOf(prop.getProperty(AUDIT_LOG_TRANSFER_ALL_CASH_ENABLED, DEFAULT_ENABLE_VALUE));
+	}
+
+
+
+
 }//End of class Environment
