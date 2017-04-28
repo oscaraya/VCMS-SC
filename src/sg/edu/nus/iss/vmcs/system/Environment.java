@@ -39,6 +39,13 @@ public class Environment {
 	/**This constant is for Give Change */
 	public final static String CHANGETYPE = "change.type";
 
+	public final static String EMAIL_ENABLE= "notication.channel.email.enabled";
+	public final static String SMS_ENABLE = "notication.channel.sms.enabled";
+	public final static String DRINK_ENABLE = "notication.items.drink.enabled";
+	public final static String COIN_ENABLE = "notication.items.coin.enabled";
+	public final static String DRINK_THRESHOLD = "coin.threshold";
+	public final static String COIN_THRESHOLD = "drink.threshold";
+
 	private static Properties prop;
 
 	/**
@@ -104,6 +111,30 @@ public class Environment {
 
 	public static String getChangetype() {
 		return prop.getProperty(CHANGETYPE);
+	}
+
+	public static Boolean getEmailEnable() {
+		return Boolean.parseBoolean(prop.getProperty(EMAIL_ENABLE));
+	}
+
+	public static Boolean getSMSEnable() {
+		return Boolean.parseBoolean(prop.getProperty(SMS_ENABLE));
+	}
+
+	public static Boolean getDrinkEnable() {
+		return Boolean.parseBoolean(prop.getProperty(DRINK_ENABLE));
+	}
+
+	public static Boolean getCoinEnable() {
+		return Boolean.parseBoolean(prop.getProperty(COIN_ENABLE));
+	}
+
+	public static Integer getCoinThreshold() {
+		return Integer.parseInt(prop.getProperty(COIN_THRESHOLD));
+	}
+
+	public static Integer getDrinkThreshold() {
+		return Integer.parseInt(prop.getProperty(DRINK_THRESHOLD));
 	}
 
 

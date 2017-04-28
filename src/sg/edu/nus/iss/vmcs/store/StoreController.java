@@ -9,7 +9,11 @@ package sg.edu.nus.iss.vmcs.store;
 
 import sg.edu.nus.iss.vmcs.util.audit.LoggerController;
 
+import sg.edu.nus.iss.vmcs.system.Environment;
+
 import java.io.IOException;
+
+import java.util.ArrayList;
 
 /**
  * This control object manages changes in CashStore attributes and
@@ -36,6 +40,7 @@ public class StoreController {
 	private PropertyLoader drinksLoader;
 	private LoggerController itemDispenseLogger;
 	private LoggerController paymentlogger;
+	private ArrayList<Observer> observers = new ArrayList<Observer>();
 
 	/**
 	 * This constructor creates an instance of StoreController object.
@@ -279,6 +284,10 @@ public class StoreController {
 		drinksLoader.saveProperty();
 	}
 
+	public void attach(Observer observer){
+		observers.add(observer);
+	}
+
 	/**
 	 * This method instructs the {@link DrinksStore} to dispense one drink, and then updates the
 	 * {@link sg.edu.nus.iss.vmcs.machinery.MachinerySimulatorPanel}&#46; It returns TRUE or FALSE to indicate whether dispensing
@@ -290,6 +299,11 @@ public class StoreController {
 		item = (DrinksStoreItem) getStoreItem(Store.DRINK, idx);
 		item.decrement();
 		this.itemDispenseLogger.info("Dispense Drink: "+item.getContent().getName());
+		if(item.getQuantity() < Environment.getDrinkThreshold()) {
+			for (Observer observer : observers) {
+				observer.updateDrink(item.getContent().name);
+			}
+		}
 	}
 
 	/**
@@ -314,7 +328,13 @@ public class StoreController {
 	public void giveChange(int idx, int numOfCoins)  {
 		CashStoreItem item;
 		item = (CashStoreItem) getStoreItem(Store.CASH, idx);
-		for (int i = 0; i < numOfCoins; i++)
+		for (int i = 0; i < numOfCoins; i++){
 			item.decrement();
+			if(item.getQuantity() < Environment.getCoinThreshold()) {
+				for (Observer observer : observers) {
+					observer.updateCoin(item.getContent().name);
+				}
+			}
+		}
 	}
 }//End of class StoreController

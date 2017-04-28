@@ -78,6 +78,12 @@ public class MainController {
 			trCtrl = new TranslatorController(Environment.getLanguage());
 			storeCtrl = new StoreController(cashLoader, drinksLoader, new ItemDispenseLoggerController(), new PaymentLoggerController());
 			storeCtrl.initialize();
+			if(Environment.getEmailEnable()) {
+				new sg.edu.nus.iss.vmcs.store.EmailObserver(storeCtrl);
+			}
+			if(Environment.getSMSEnable()) {
+				new sg.edu.nus.iss.vmcs.store.SMSObserver(storeCtrl);
+			}
 			simulatorCtrl = new SimulationController(this);
 			machineryCtrl = new MachineryController(this);
 			machineryCtrl.initialize();
