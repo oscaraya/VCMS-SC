@@ -10,11 +10,11 @@ import sg.edu.nus.iss.vmcs.util.VMCSException;
 /**
  * Created by debas on 27/4/2017.
  */
-public class LargerDenominationFirst implements ChangeGivingStrategy {
+public class LargeDenominationFirst implements ChangeGivingStrategy {
     private TransactionController txCtrl;
 
 
-    public LargerDenominationFirst(TransactionController txCtrl){
+    public LargeDenominationFirst(TransactionController txCtrl){
         this.txCtrl=txCtrl;
     }
     @Override

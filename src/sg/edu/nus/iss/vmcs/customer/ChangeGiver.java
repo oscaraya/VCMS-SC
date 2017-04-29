@@ -65,7 +65,7 @@ public class ChangeGiver {
 			boolean check=false;
 			System.out.println("print"+Environment.getChangetype());
 			if(Environment.getChangetype().equals("large_denomination_first")) {
-				ChangeGiver context = new ChangeGiver(new LargerDenominationFirst(txCtrl));
+				ChangeGiver context = new ChangeGiver(new LargeDenominationFirst(txCtrl));
 				context.executeStrategy(changeRequired);
 				return true;
 			}else{
