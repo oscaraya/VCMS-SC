@@ -14,14 +14,16 @@ public class SMSObserver extends Observer {
     @Override
     public void updateDrink(String name) {
         if(Environment.getDrinkEnable()) {
-            System.out.println( "SMS - "+name+" is in low stock" );
+            UpdateLowStockContext context = new UpdateLowStockContext(new UpdateDrinkLowStock());
+            context.executeStrategy("SMS",name);
         }
     }
 
     @Override
     public void updateCoin(String name) {
         if(Environment.getCoinEnable()) {
-            System.out.println( "SMS - "+name+" is in low stock" );
+            UpdateLowStockContext context = new UpdateLowStockContext(new UpdateCoinLowStock());
+            context.executeStrategy("SMS",name);
         }
     }
 }
