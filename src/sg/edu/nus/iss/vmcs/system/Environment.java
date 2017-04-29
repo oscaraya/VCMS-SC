@@ -31,6 +31,7 @@ public class Environment {
 	public final static String DEFAULT_LANGUAGE = "English";
 
 	/**This constant is for audit logger */
+	public final static String AUDIT_LOG_ENABLED = "audit.log.enabled";
 	public final static String AUDIT_LOG_ITEM_DISPENSE_ENABLED = "audit.log.item_dispense.enabled";
 	public final static String AUDIT_LOG_PAYMENT_ENABLED = "audit.log.payment.enabled";
 	public final static String AUDIT_LOG_TRANSFER_ALL_CASH_ENABLED = "audit.log.transfer_all_cash.enabled";
@@ -95,6 +96,11 @@ public class Environment {
 
 	public static String getLanguage(){
 		return prop.getProperty(LANGUAGE, DEFAULT_LANGUAGE);
+	}
+
+
+	public static Boolean isAuditLogEnabled() {
+		return Boolean.valueOf(prop.getProperty(AUDIT_LOG_ENABLED, DEFAULT_ENABLE_VALUE));
 	}
 
 	public static Boolean isAuditLogItemDispenseEnabled() {

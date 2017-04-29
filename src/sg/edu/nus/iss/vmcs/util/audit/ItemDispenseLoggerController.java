@@ -6,7 +6,7 @@ public class ItemDispenseLoggerController extends BaseLoggerController {
 
     @Override
     public boolean isEnabled() {
-        return Environment.isAuditLogItemDispenseEnabled();
+        return Environment.isAuditLogEnabled() && Environment.isAuditLogItemDispenseEnabled();
     }
 
 }

@@ -6,7 +6,7 @@ public class TransferAllCashLoggerController extends BaseLoggerController{
 
     @Override
     public boolean isEnabled() {
-        return Environment.isAuditLogTransferAllCashEnabled();
+        return Environment.isAuditLogEnabled() && Environment.isAuditLogTransferAllCashEnabled();
     }
 
 }
